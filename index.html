@@ -1,1 +1,656 @@
-<h1>MY portfolio</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michelle Sanders - Software Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .resume-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInUp 1s ease-out forwards;
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .name {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: fadeInDown 1s ease-out 0.5s forwards;
+        }
+
+        .title {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s forwards;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0;
+        }
+
+        .left-column {
+            padding: 40px;
+            background: white;
+        }
+
+        .right-column {
+            padding: 40px;
+            background: #f8f9fa;
+            border-left: 3px solid #3498db;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .section:nth-child(even) {
+            transform: translateX(30px);
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: #2980b9;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            animation: borderSlide 2s ease-out 2s forwards;
+        }
+
+        @keyframes borderSlide {
+            to { left: 0; }
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            transform: scale(0.95);
+            opacity: 0;
+            animation: scaleIn 0.6s ease-out forwards;
+        }
+
+        .experience-item:hover, .education-item:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.2);
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 5px;
+        }
+
+        .company {
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .date-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .achievements {
+            list-style: none;
+        }
+
+        .achievements li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fadeInLeft 0.5s ease-out forwards;
+        }
+
+        .achievements li:nth-child(1) { animation-delay: 3s; }
+        .achievements li:nth-child(2) { animation-delay: 3.2s; }
+        .achievements li:nth-child(3) { animation-delay: 3.4s; }
+
+        .achievements li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-size: 0.8rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: bounceIn 0.6s ease-out forwards;
+        }
+
+        .skill-item:nth-child(1) { animation-delay: 2.5s; }
+        .skill-item:nth-child(2) { animation-delay: 2.7s; }
+        .skill-item:nth-child(3) { animation-delay: 2.9s; }
+        .skill-item:nth-child(4) { animation-delay: 3.1s; }
+        .skill-item:nth-child(5) { animation-delay: 3.3s; }
+        .skill-item:nth-child(6) { animation-delay: 3.5s; }
+
+        .skill-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #3498db;
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .strength-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.6s ease-out forwards;
+        }
+
+        .strength-item:nth-child(1) { animation-delay: 2s; }
+        .strength-item:nth-child(2) { animation-delay: 2.3s; }
+        .strength-item:nth-child(3) { animation-delay: 2.6s; }
+
+        .strength-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+        }
+
+        .strength-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .language-bar:nth-child(1) { animation-delay: 2.5s; }
+        .language-bar:nth-child(2) { animation-delay: 2.8s; }
+
+        .language-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: all 0.3s ease;
+        }
+
+        .dot.filled {
+            background: #3498db;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .certification {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            opacity: 0;
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+
+        .certification:nth-child(1) { animation-delay: 3s; }
+        .certification:nth-child(2) { animation-delay: 3.3s; }
+
+        .cert-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 5px;
+        }
+
+        .passion-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .passion-item:nth-child(1) { animation-delay: 3.5s; }
+        .passion-item:nth-child(2) { animation-delay: 3.8s; }
+
+        .passion-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .icon {
+            font-size: 1.5rem;
+            color: #3498db;
+        }
+
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .left-column, .right-column {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <header class="header">
+            <h1 class="name">MICHELLE SANDERS</h1>
+            <p class="title">Software Engineer | Full-Stack Developer</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="icon">📧</span>
+                    <span>help@enhancv.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="icon">🔗</span>
+                    <span>linkedin.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="icon">📍</span>
+                    <span>Houston, Texas</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-column">
+                <section class="section" style="animation-delay: 0.2s;">
+                    <h2>SUMMARY</h2>
+                    <p>Dedicated Software Engineer with over two years of experience, skilled in full-stack development and cloud computing. Managed several technical projects, significantly improving system performance. Most notable achievement includes winning a university-level hackathon and contributing to a high-profile product during an internship at Hewlett Packard Enterprise.</p>
+                </section>
+
+                <section class="section" style="animation-delay: 0.4s;">
+                    <h2>EXPERIENCE</h2>
+                    
+                    <div class="experience-item" style="animation-delay: 1s;">
+                        <div class="job-title">Software Engineering Intern</div>
+                        <div class="company">Hewlett Packard Enterprise</div>
+                        <div class="date-location">📅 Date period | 📍 Houston, TX</div>
+                        <p>Worked on product development using a modern tech stack while following Agile methodologies.</p>
+                        <ul class="achievements">
+                            <li>Contributed to the development of a key feature in a product, resulting in a 15% increase in user engagement.</li>
+                            <li>Improved system performance by 10% through optimization of existing code base.</li>
+                            <li>Assisted in the migration of part of the company's infrastructure to a cloud-based solution.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item" style="animation-delay: 1.3s;">
+                        <div class="job-title">Junior Software Engineer</div>
+                        <div class="company">Baker Hughes, a GE company</div>
+                        <div class="date-location">📅 Present | 📍 Houston, TX</div>
+                        <p>Collaborated with the development team to deliver cutting-edge software solutions.</p>
+                        <ul class="achievements">
+                            <li>Designed and implemented a new software component, boosting system functionality by 20%.</li>
+                            <li>Maintained and updated the company's internal database leading to streamlined processing of information.</li>
+                            <li>Acted as the liaison between the engineering and project management teams, ensuring smooth communication and workflow.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section" style="animation-delay: 0.6s;">
+                    <h2>EDUCATION</h2>
+                    <div class="education-item" style="animation-delay: 1.6s;">
+                        <div class="job-title">Bachelor of Science in Computer Science</div>
+                        <div class="company">University of Houston</div>
+                        <div class="date-location">📅 2016 - 2020 | 📍 Houston, Texas</div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-column">
+                <section class="section" style="animation-delay: 0.8s;">
+                    <h2>STRENGTHS</h2>
+                    
+                    <div class="strength-item">
+                        <div class="strength-title">
+                            <span class="icon">🎯</span>
+                            Technical Project Management
+                        </div>
+                        <p>Successfully managed multiple academic software projects, exceeding project deadlines and delivering high standard results.</p>
+                    </div>
+
+                    <div class="strength-item">
+                        <div class="strength-title">
+                            <span class="icon">🌐</span>
+                            Multilingual Communication
+                        </div>
+                        <p>Proficient in English and Spanish, aiding the enhancement of communication within diverse development teams.</p>
+                    </div>
+
+                    <div class="strength-item">
+                        <div class="strength-title">
+                            <span class="icon">👥</span>
+                            Team Leadership
+                        </div>
+                        <p>Led teams of up to 6 university students in various projects, effectively managing resources and meeting project goals.</p>
+                    </div>
+                </section>
+
+                <section class="section" style="animation-delay: 1s;">
+                    <h2>SKILLS</h2>
+                    <div class="skills-grid">
+                        <div class="skill-item">Java</div>
+                        <div class="skill-item">Python</div>
+                        <div class="skill-item">C++</div>
+                        <div class="skill-item">Agile Methodologies</div>
+                        <div class="skill-item">Full-Stack Development</div>
+                        <div class="skill-item">Cloud Computing</div>
+                        <div class="skill-item">Database Management</div>
+                    </div>
+                </section>
+
+                <section class="section" style="animation-delay: 1.2s;">
+                    <h2>LANGUAGES</h2>
+                    <div class="language-bar">
+                        <span><strong>English</strong> - Native</span>
+                        <div class="language-dots">
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                        </div>
+                    </div>
+                    <div class="language-bar">
+                        <span><strong>Spanish</strong> - Proficient</span>
+                        <div class="language-dots">
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                            <div class="dot filled"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" style="animation-delay: 1.4s;">
+                    <h2>CERTIFICATION</h2>
+                    <div class="certification">
+                        <div class="cert-title">Java Programming and Software Engineering Fundamentals</div>
+                        <p>Completed at Duke University via Coursera in 2019</p>
+                    </div>
+                    <div class="certification">
+                        <div class="cert-title">AWS Certified Cloud Practitioner</div>
+                        <p>Certified by AWS in 2020</p>
+                    </div>
+                </section>
+
+                <section class="section" style="animation-delay: 1.6s;">
+                    <h2>PASSIONS</h2>
+                    <div class="passion-item">
+                        <span class="icon">💻</span>
+                        <div>
+                            <strong>Coding Challenges</strong>
+                            <p>I enjoy pushing my coding abilities by participating in various coding competitions and hackathons.</p>
+                        </div>
+                    </div>
+                    <div class="passion-item">
+                        <span class="icon">🏃‍♀️</span>
+                        <div>
+                            <strong>Fitness</strong>
+                            <p>Maintaining physical health and wellness through regular workouts and yoga.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate skill items on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0s';
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animated elements
+            const animatedElements = document.querySelectorAll('.skill-item, .strength-item, .experience-item, .certification, .passion-item');
+            animatedElements.forEach(el => observer.observe(el));
+
+            // Add hover effects to contact items
+            const contactItems = document.querySelectorAll('.contact-item');
+            contactItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.05)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-2px) scale(1)';
+                });
+            });
+
+            // Add click effects to skill items
+            const skillItems = document.querySelectorAll('.skill-item');
+            skillItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-5px) scale(1.05)';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
